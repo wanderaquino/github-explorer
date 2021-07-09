@@ -3,6 +3,8 @@ const webPackHTMLPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
+    //Configuração para tornar o código mais "friendly" para debug --Dev
+    devtool: "eval-source-map",
     entry: path.resolve(__dirname, "src", "index.jsx"),
     output: {
         path: path.resolve(__dirname, "dist"),
