@@ -1,10 +1,11 @@
 const path = require("path");
 const webPackHTMLPlugin = require("html-webpack-plugin");
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
-    mode: "development",
+    mode: isDevelopment ? "development" : "production",
     //Configuração para tornar o código mais "friendly" para debug --Dev
-    devtool: "eval-source-map",
+    devtool: isDevelopment ? "eval-source-map": "source-map",
     entry: path.resolve(__dirname, "src", "index.jsx"),
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -27,6 +28,12 @@ module.exports = {
                 //Não fazer conversão dos arquivos da node_modules
                 exclude: /node_modules/,
                 use: "babel-loader"
+            },
+            {
+                test: /\.css$/,
+                //Não fazer conversão dos arquivos da node_modules
+                exclude: /node_modules/,
+                use: ["style-loader", "css-loader"]
             }
         ]
     }
