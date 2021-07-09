@@ -1,4 +1,5 @@
 const path = require("path");
+const webPackHTMLPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
@@ -10,6 +11,8 @@ module.exports = {
     resolve: {
         extensions: [".js",".jsx"]
     },
+    //Incluído para dinamizar o import do bundle.js
+    plugins:[new webPackHTMLPlugin({template: path.resolve(__dirname, "public", "index.html")})],
     //Como a aplicação vai se comportar quando importar cada tipo de arquivo...
     module: {
         rules: [
