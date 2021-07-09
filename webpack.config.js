@@ -11,6 +11,10 @@ module.exports = {
     resolve: {
         extensions: [".js",".jsx"]
     },
+    //Configuração para o webpack "escutar" e atualizar a cada save...
+    devServer: {
+        contentBase: path.resolve(__dirname, "public")
+    },
     //Incluído para dinamizar o import do bundle.js
     plugins:[new webPackHTMLPlugin({template: path.resolve(__dirname, "public", "index.html")})],
     //Como a aplicação vai se comportar quando importar cada tipo de arquivo...
