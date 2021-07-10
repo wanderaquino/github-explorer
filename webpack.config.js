@@ -1,6 +1,7 @@
 const path = require("path");
 const webPackHTMLPlugin = require("html-webpack-plugin");
 const isDevelopment = process.env.NODE_ENV !== "production";
+const reactRefreshWebpackPlug = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = {
     mode: isDevelopment ? "development" : "production",
@@ -16,10 +17,15 @@ module.exports = {
     },
     //Configuração para o webpack "escutar" e atualizar a cada save...
     devServer: {
-        contentBase: path.resolve(__dirname, "public")
+        contentBase: path.resolve(__dirname, "public"),
+        hot: true
     },
     //Incluído para dinamizar o import do bundle.js
-    plugins:[new webPackHTMLPlugin({template: path.resolve(__dirname, "public", "index.html")})],
+    plugins:[
+        isDevelopment && new reactRefreshWebpackPlug(),
+        new webPackHTMLPlugin({template: path.resolve(__dirname, "public", "index.html")})
+        
+    ].filter(Boolean),
     //Como a aplicação vai se comportar quando importar cada tipo de arquivo...
     module: {
         rules: [
@@ -27,7 +33,12 @@ module.exports = {
                 test: /\.jsx$/,
                 //Não fazer conversão dos arquivos da node_modules
                 exclude: /node_modules/,
-                use: "babel-loader"
+                use: {  
+                    loader: "babel-loader",
+                    options: {
+                        plugins: [isDevelopment && require.resolve("react-refresh/babel")].filter(Boolean)
+                    }
+                }
             },
             {
                 test: /\.scss$/,
