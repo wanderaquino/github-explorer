@@ -1,5 +1,4 @@
 export function RepositoryItem(props) {
-    console.log(props);
     return (
         <li>
             <strong>{props.repository ?? "Default"}</strong>
