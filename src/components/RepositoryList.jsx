@@ -1,4 +1,5 @@
 import {RepositoryItem} from "./RepositoryItem";
+import {useState} from "react";
 import "../style/repositories.scss";
 
 const repositoryData = {
@@ -8,6 +9,8 @@ const repositoryData = {
 }
 
 export function RepositoryList () {
+    const [repositoryList, setRepositoryList] = useState([]);
+    
     return (
         <section className="repository-list">
             <h1>Lista de Respositórios</h1>
